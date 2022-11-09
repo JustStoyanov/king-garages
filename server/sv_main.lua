@@ -21,14 +21,6 @@ ESX.RegisterServerCallback('king-garages:server:getVehicleMods', function(src, c
     end)
 end)
 
-ESX.RegisterServerCallback('king-garages:server:getVehicleGarage', function(src, callback, plate)
-    MySQL.Async.fetchAll('SELECT garage FROM owned_vehicles WHERE plate = @plate', {
-        ['@plate'] = plate
-    }, function(garagewiththevehicle)
-        callback(garagewiththevehicle)
-    end)
-end)
-
 RegisterServerEvent('king-garages:server:updateVehicle', function(plate, fuel, state, mods, garagename)
 	MySQL.update('UPDATE owned_vehicles SET fuel = @fuel, state = @state, mods = @mods, garage = @garage WHERE plate = @plate', {
 		['@plate'] = plate,

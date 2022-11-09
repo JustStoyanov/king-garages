@@ -16,6 +16,7 @@ body {
   height: 50vh;
   overflow-y: scroll !important;
   overflow-x: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.651);
   border-radius: 4px;
   background-color: rgba(33, 150, 163, 0.651);
   box-shadow: 1px 1px 6px rgb(5, 5, 5);
@@ -51,6 +52,7 @@ body {
   margin-top: 1.5vh;
   margin-bottom: 1.5vh;
   margin-left: 1.58vh;
+  border: 2px solid rgba(255, 255, 255, 0.651);
   border-radius: 4px;
   background-color: rgba(33, 150, 163, 0.651);
   box-shadow: 1px 1px 6px rgb(5, 5, 5);
@@ -87,6 +89,7 @@ body {
   width: 27vh;
   top: -6vh;
   right: -50vh;
+  border: 2px solid rgba(255, 255, 255, 0.651);
   background-color: rgba(33, 150, 163, 0.651);
   box-shadow: 1px 1px 6px rgb(5, 5, 5);
 }
@@ -136,7 +139,8 @@ body {
 }
 
 .selected {
-  border-color: green;
+  /* border-color: green; */
+  border-color:rgba(194, 194, 194, 0.651);
 }
 
 .low {
@@ -216,6 +220,7 @@ body {
 .tooltiptext {
   visibility: hidden;
   width: 100px;
+  border: 2px solid rgba(255, 255, 255, 0.651);
   background-color: rgba(33, 150, 163, 0.651);
   color: rgb(255, 255, 255);
   font-weight: 650;
@@ -243,6 +248,7 @@ body {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
+  border: 2px solid rgba(255, 255, 255, 0.651);
   border-color: rgba(33, 150, 163, 0.651) transparent transparent transparent;
 }
   
