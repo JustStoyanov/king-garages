@@ -75,8 +75,8 @@ local function openJobGarage()
         local jobVehicle = {
             ['Name'] = Config.VehicleLabels[roleplay.model], 
             ['Model'] = roleplay.model, 
-            ['Plate'] = 'KCPD'..math.random(1111, 9999), 
-            ['Garage'] = 'KCPD',
+            ['Plate'] = ESX.PlayerData.job.label..math.random(1111, 9999), 
+            ['Garage'] = ESX.PlayerData.job.label,
             ['State'] = 'in', 
             ['Fuel'] = 80, 
             ['Motor'] = 1000, 
@@ -106,21 +106,25 @@ end)
 
 RegisterNUICallback('TakeOutVehicle', function(data)
     if not IsPedInAnyVehicle(PlayerPedId(), false) then
-        if CurrentGarage.name ~= 'KCPD' then
+        if CurrentGarage.name ~= ESX.PlayerData.job.label then
             if data.State == 'in' then
                 ESX.TriggerServerCallback('king-garages:server:getVehicleMods', function(vehdata)
                     VehicleMods = vehdata
                     for king,roleplay in pairs(VehicleMods) do
                         if CurrentGarage.name == roleplay.garage then
-                            exports['king-core']:Vehicle('spawn', data.Model, Config.ParkingLocations[CurrentGarage.id].x, Config.ParkingLocations[CurrentGarage.id].y, Config.ParkingLocations[CurrentGarage.id].z, Config.ParkingLocations[CurrentGarage.id].h, function(spawnedvehicle)
-                                Citizen.Wait(500)
-                                if roleplay.mods ~= nil then
-                                    ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
-                                end
-                                SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
-                                exports['king-fuel']:SetFuel(spawnedvehicle, data.Fuel)
-                                TriggerServerEvent('king-garages:server:updateVehicle', data.Plate, data.Fuel, 'out', json.decode(roleplay.mods), 'Impound')
-                            end, true)
+                            if not IsAnyVehicleNearPoint(Config.ParkingLocations[CurrentGarage.id].x, Config.ParkingLocations[CurrentGarage.id].y, Config.ParkingLocations[CurrentGarage.id].z, 5.0) then
+                                exports['king-core']:Vehicle('spawn', data.Model, Config.ParkingLocations[CurrentGarage.id].x, Config.ParkingLocations[CurrentGarage.id].y, Config.ParkingLocations[CurrentGarage.id].z, Config.ParkingLocations[CurrentGarage.id].h, function(spawnedvehicle)
+                                    Citizen.Wait(500)
+                                    if roleplay.mods ~= nil then
+                                        ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                    end
+                                    SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                                    exports['king-fuel']:SetFuel(spawnedvehicle, data.Fuel)
+                                    TriggerServerEvent('king-garages:server:updateVehicle', data.Plate, data.Fuel, 'out', json.decode(roleplay.mods), 'Impound')
+                                end, true)
+                            else
+                                Notify('Вече има кола на това място.', 'error')
+                            end
                         else
                             Notify('Колата ти е в друг гараж.', 'error')
                         end
@@ -129,13 +133,17 @@ RegisterNUICallback('TakeOutVehicle', function(data)
             else
                 Notify('Колата ти не е в гаража.', 'error')
             end
-        elseif CurrentGarage.name == 'KCPD' then
-            exports['king-core']:Vehicle('spawn', data.Model, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].x, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].y, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].z, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].h, function(spawnedvehicle)
-                Citizen.Wait(500)
-                SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
-                exports['king-fuel']:SetFuel(spawnedvehicle, data.Fuel)
-                haveJobVehicle = true
-            end, true)
+        elseif CurrentGarage.name == ESX.PlayerData.job.label then
+            if not IsAnyVehicleNearPoint(Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].x, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].y, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].z, 2) then
+                exports['king-core']:Vehicle('spawn', data.Model, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].x, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].y, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].z, Config.JobGarages[ESX.PlayerData.job.label][CurrentGarage.id].h, function(spawnedvehicle)
+                    Citizen.Wait(500)
+                    SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                    exports['king-fuel']:SetFuel(spawnedvehicle, data.Fuel)
+                    haveJobVehicle = true
+                end, true)
+            else
+                Notify('Вече има кола на това място.', 'error')
+            end
         end
     else
         Notify('Слизай от колата, девелак!', 'error')
@@ -173,16 +181,16 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    for king,roleplay in pairs(Config.JobGarages['KCPD']) do
+    for king,roleplay in pairs(Config.JobGarages[ESX.PlayerData.job.label]) do
         roleplay.parkingzone = lib.zones.box({
             coords = vec3(roleplay.x, roleplay.y, roleplay.z),
             size = vec3(2.7, 5, 3),
             rotation = roleplay.h,
             debug = false,
             inside = function()
-                if ESX.PlayerData.job.label == 'KCPD' then
+                if ESX.PlayerData.job.name == roleplay.job then
                     if IsControlJustPressed(0, 38) then
-                        CurrentGarage.name = 'KCPD'
+                        CurrentGarage.name = ESX.PlayerData.job.label
                         CurrentGarage.id = roleplay.garageid
                         if not haveJobVehicle then
                             openJobGarage()
@@ -196,7 +204,7 @@ Citizen.CreateThread(function()
                 end
             end,
             onEnter = function()
-                if ESX.PlayerData.job.label == 'KCPD' then
+                if ESX.PlayerData.job.name == roleplay.job then
                     exports['king-library']:TextUI('show', '[E] Гараж', 'info')
                 end
             end,
@@ -224,9 +232,7 @@ end)
 
 if Config.DevMode then
     RegisterCommand('garage_teste', function()
-        for king,roleplay in pairs(Config.JobGarages['KCPD']) do
-            print(roleplay.garageid)
-        end
+        -- If I want to test something, I will type it here
     end)
 end
 

@@ -28,14 +28,20 @@ Config.ParkingLocations = {
     [16] = { x = 236.92425, y = -795.1248, z = 30.500244, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
     [17] = { x = 233.66259, y = -802.3024, z = 30.473236, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
     [18] = { x = 232.18840, y = -807.7727, z = 30.441129, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
-    [19] = { x = 106.35281, y = -1063.195, z = 29.192346, h = 70.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [20] = { x = 110.95535, y = -1052.735, z = 29.203161, h = 70.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [21] = { x = 121.15685, y = -1080.992, z = 29.192930, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [22] = { x = 128.49424, y = -1081.500, z = 29.212236, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [23] = { x = 135.78657, y = -1081.691, z = 29.193611, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [24] = { x = 143.24874, y = -1081.598, z = 29.192344, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [25] = { x = 150.93791, y = -1081.516, z = 29.212219, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
-    [26] = { x = 158.29385, y = -1081.569, z = 29.192375, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [19] = { x = 233.01296, y = -773.9608, z = 30.738611, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
+    [20] = { x = 231.18141, y = -778.7935, z = 30.712379, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
+    [21] = { x = 228.48529, y = -786.3255, z = 30.697439, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
+    [22] = { x = 226.55522, y = -791.2108, z = 30.678628, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
+    [23] = { x = 223.82804, y = -798.9561, z = 30.661596, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
+    [24] = { x = 221.97802, y = -803.7878, z = 30.678428, h = 70.0, distance = 1.5, parkingname = 'Central', parkingzone }, -- Главен Гараж
+    [25] = { x = 106.35281, y = -1063.195, z = 29.192346, h = 70.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [26] = { x = 110.95535, y = -1052.735, z = 29.203161, h = 70.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [27] = { x = 121.15685, y = -1080.992, z = 29.192930, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [28] = { x = 128.49424, y = -1081.500, z = 29.212236, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [29] = { x = 135.78657, y = -1081.691, z = 29.193611, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [30] = { x = 143.24874, y = -1081.598, z = 29.192344, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [31] = { x = 150.93791, y = -1081.516, z = 29.212219, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
+    [32] = { x = 158.29385, y = -1081.569, z = 29.192375, h = 150.0, distance = 1.5, parkingname = 'Vespucci Boulevard', parkingzone }, -- Гаража зад fleeca до legion-а
 }
 
 Config.JobGarages = {
@@ -44,6 +50,12 @@ Config.JobGarages = {
         ['KCPD2'] = { x = 446.18252, y = -988.8669, z = 25.699842, h = 90.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD2', parkingzone },
         ['KCPD3'] = { x = 437.13143, y = -994.4346, z = 25.699861, h = 280.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD3', parkingzone },
         ['KCPD4'] = { x = 437.67630, y = -988.9340, z = 25.700178, h = 280.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD4', parkingzone }
+    },
+
+    ['King Tunes'] = {
+        ['King Tunes1'] = { x = 124.49122, y = -3047.531, z = 7.0408916, h = 260.0, distance = 1.5, job = 'king_tunes', garageid = 'King Tunes1', parkingzone },
+        ['King Tunes2'] = { x = 124.47714, y = -3041.367, z = 7.0408916, h = 260.0, distance = 1.5, job = 'king_tunes', garageid = 'King Tunes2', parkingzone },
+        ['King Tunes3'] = { x = 124.53906, y = -3035.318, z = 7.0408916, h = 260.0, distance = 1.5, job = 'king_tunes', garageid = 'King Tunes3', parkingzone },
     }
 }
 
@@ -208,6 +220,14 @@ Config.JobVehicles = {
                 { model = 'nforce10' },
                 { model = 'nforce1'},
                 { model = 'nforce11' }
+            }
+        }
+    },
+    ['King Tunes'] = {
+        ['novice'] = {
+            ['grade'] = 'novice',
+            ['whitelisted_vehicles'] = {
+                { model = 'nforce7' }
             }
         }
     }
