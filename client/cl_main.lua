@@ -21,7 +21,7 @@ local PlayerGarage, VehicleMods, CurrentGarage = {}, {}, {}
 -- █▀▀ █░█ █▄░█ █▀▀ ▀█▀ █ █▀█ █▄░█ █▀ --
 -- █▀░ █▄█ █░▀█ █▄▄ ░█░ █ █▄█ █░▀█ ▄█ --
 
-
+local PreviewedVehicle
 
 -- █░█ █▀ █▀▀ █▀█   █ █▄░█ ▀█▀ █▀▀ █▀█ █▀▀ ▄▀█ █▀▀ █▀▀ --
 -- █▄█ ▄█ ██▄ █▀▄   █ █░▀█ ░█░ ██▄ █▀▄ █▀░ █▀█ █▄▄ ██▄ --
@@ -32,6 +32,82 @@ end)
   
 RegisterNUICallback('CloseNui', function()
     SetNuiFocus(false, false)
+    DeleteEntity(PreviewedVehicle)
+end)
+
+RegisterNUICallback('UnselectVehicle', function()
+    DeleteEntity(PreviewedVehicle)
+end)
+
+RegisterNUICallback('SelectVehicle', function(data)
+    if not IsPedInAnyVehicle(PlayerPedId(), false) then
+        if CurrentGarage.name ~= ESX.PlayerData.job.label and CurrentGarage.name ~= 'Impound' then
+            if data.State == 'in' then
+                ESX.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
+                    VehicleMods = vehdata
+                    for king,roleplay in pairs(VehicleMods) do
+                        if CurrentGarage.name == roleplay.garage then
+                            if not IsAnyVehicleNearPoint(Config.Locations['ParkingLocations'][CurrentGarage.id].x, Config.Locations['ParkingLocations'][CurrentGarage.id].y, Config.Locations['ParkingLocations'][CurrentGarage.id].z, 5.0) then
+                                exports['king-core']:Vehicle('spawn', data.Model, Config.Locations['ParkingLocations'][CurrentGarage.id].x, Config.Locations['ParkingLocations'][CurrentGarage.id].y, Config.Locations['ParkingLocations'][CurrentGarage.id].z, Config.Locations['ParkingLocations'][CurrentGarage.id].h, function(spawnedvehicle)
+                                    PreviewedVehicle = spawnedvehicle
+                                    Citizen.Wait(500)
+                                    if roleplay.mods ~= nil then
+                                        ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                    end
+                                    SetEntityCollision(spawnedvehicle, false)
+                                    SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                                end)
+                            else
+                                Notify('Вече има кола на това място.', 'error')
+                            end
+                        else
+                            Notify('Колата ти е в друг гараж.', 'error')
+                        end
+                    end
+                end, data.Plate)
+            end
+        elseif CurrentGarage.name == 'Impound' then
+            if data.State == 'out' then
+                ESX.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
+                    VehicleMods = vehdata
+                    for king,roleplay in pairs(VehicleMods) do
+                        if CurrentGarage.name == roleplay.garage then
+                            if not IsAnyVehicleNearPoint(Config.Locations['Impound'][CurrentGarage.id].x, Config.Locations['Impound'][CurrentGarage.id].y, Config.Locations['Impound'][CurrentGarage.id].z, 5.0) then
+                                exports['king-core']:Vehicle('spawn', data.Model, Config.Locations['Impound'][CurrentGarage.id].x, Config.Locations['Impound'][CurrentGarage.id].y, Config.Locations['Impound'][CurrentGarage.id].z, Config.Locations['Impound'][CurrentGarage.id].h, function(spawnedvehicle)
+                                    PreviewedVehicle = spawnedvehicle
+                                    Citizen.Wait(500)
+                                    if roleplay.mods ~= nil then
+                                        ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                    end
+                                    SetEntityCollision(spawnedvehicle, false)
+                                    SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                                    --exports['fuel-old']:SetFuel(spawnedvehicle, data.Fuel)
+                                end, true)
+                            else
+                                Notify('Вече има кола на това място.', 'error')
+                            end
+                        else
+                            Notify('Колата ти е в друг гараж.', 'error')
+                        end
+                    end
+                end, data.Plate)
+            end
+        elseif CurrentGarage.name == ESX.PlayerData.job.label then
+            if not IsAnyVehicleNearPoint(Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].x, Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].y, Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].z, 2) then
+                exports['king-core']:Vehicle('spawn', data.Model, Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].x, Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].y, Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].z, Config.Locations['JobGarages'][ESX.PlayerData.job.label][CurrentGarage.id].h, function(spawnedvehicle)
+                    PreviewedVehicle = spawnedvehicle
+                    Citizen.Wait(500)
+                    SetEntityCollision(spawnedvehicle, false)
+                    SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                    --exports['fuel-old']:SetFuel(spawnedvehicle, data.Fuel)
+                end, true)
+            else
+                Notify('Вече има кола на това място.', 'error')
+            end
+        end
+    else
+        Notify('Слизай от колата, девелак!', 'error')
+    end
 end)
 
 RegisterNUICallback('TakeOutVehicle', function(data)

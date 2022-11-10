@@ -36,6 +36,7 @@ $(document).on("click", '.vecicle-container', function(e) {
    $.post(`https://king-garages/Click`, JSON.stringify({}));
    if (CurrentMenu != null && CurrentMenu != undefined) {
      CurrentMenu.removeClass("selected");
+     $.post(`https://king-garages/UnselectVehicle`)
      $(".vehicle-click-container").animate({"right": "-50vh"}, 550, function() {
        $(".vehicle-click-container").css("display", "none");
        CurrentVehicleData = {}
@@ -46,6 +47,7 @@ $(document).on("click", '.vecicle-container', function(e) {
      CurrentVehicleData = {Plate: $(this).data('plate'), Model: $(this).data('model'), State: $(this).data('state'), Fuel: $(this).data('fuel'), Body: $(this).data('body'), Engine: $(this).data('motor'), Price: $(this).data('price')}
      CurrentMenu = $(this)
      ChoseActive = true
+     $.post(`https://king-garages/SelectVehicle`, JSON.stringify({Model: $(this).data('model'), Plate: $(this).data('plate'), State: $(this).data('state')}))
      $(this).addClass("selected");
      $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css("height", $(this).data('fuel') + "%");
      $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css("height", $(this).data('motor') / 1000 * 100 + "%");
