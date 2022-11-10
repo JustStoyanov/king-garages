@@ -34,5 +34,7 @@ files {
 -- Misc --
 
 exports {
-    'openGarageMenu'
+    'InsideGarageZone',
+    'InsideJobGarageZone',
+    'InsideImpoundZone'
 }

@@ -13,7 +13,7 @@ ESX.RegisterServerCallback('king-garages:server:getPlayerVehicles', function(src
     end)
 end)
 
-ESX.RegisterServerCallback('king-garages:server:getVehicleMods', function(src, callback, plate)
+ESX.RegisterServerCallback('king-garages:server:getVehicleData', function(src, callback, plate)
     MySQL.Async.fetchAll('SELECT * FROM owned_vehicles WHERE plate = @plate', {
         ['@plate'] = plate
     }, function(vehmods)
