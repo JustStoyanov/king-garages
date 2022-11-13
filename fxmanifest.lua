@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'GaDGeT#8987'
 description 'Garage system for ESX and King Core'
-version '1.0.5'
+version '1.1.0'
 
 -- Code --
 

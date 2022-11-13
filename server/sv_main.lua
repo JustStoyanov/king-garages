@@ -16,17 +16,18 @@ end)
 ESX.RegisterServerCallback('king-garages:server:getVehicleData', function(src, callback, plate)
     MySQL.Async.fetchAll('SELECT * FROM owned_vehicles WHERE plate = @plate', {
         ['@plate'] = plate
-    }, function(vehmods)
-        callback(vehmods)
+    }, function(vehdata)
+        callback(vehdata)
     end)
 end)
 
-RegisterServerEvent('king-garages:server:updateVehicle', function(plate, fuel, state, mods, garagename)
-	MySQL.update('UPDATE owned_vehicles SET fuel = @fuel, state = @state, mods = @mods, garage = @garage WHERE plate = @plate', {
+RegisterServerEvent('king-garages:server:updateVehicle', function(plate, fuel, state, mods, garagename, coords)
+	MySQL.update('UPDATE owned_vehicles SET fuel = @fuel, state = @state, mods = @mods, garage = @garage, coords = @coords WHERE plate = @plate', {
 		['@plate'] = plate,
 		['@fuel'] = fuel,
         ['@state'] = state,
         ['@mods'] = json.encode(mods),
-        ['@garage'] = garagename
+        ['@garage'] = garagename,
+        ['@coords'] = json.encode(coords)
 	})
 end)
