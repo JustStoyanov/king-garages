@@ -2,10 +2,25 @@ Config = {}
 
 -- Configuration --
 
-Config.DevMode = false
+Config.DevMode = true
 Config.ImpoundName = 'Impound'
 Config.ControlPressing = false
 Config.BlipLocations = { 
+    ['PoliceImpounds'] = {
+        { x = 442.25198, y = -1025.273, z = 28.715545 }
+    },
+
+    ['Impounds'] = {
+        { x = 488.87152, y = -1313.118, z = 29.258459 },
+        { x = 408.00949, y = -1636.939, z = 29.291952 },
+        { x = 449.56762, y = -1968.298, z = 22.938747 },
+        { x = 53.27016, y = -2566.453, z = 6.0045919 },
+        { x = 776.49993, y = -2968.878, z = 5.8007206 },
+        { x = -779.218, y = -2445.433, z = 14.570728 },
+        { x = -740.5903, y = -1305.141, z = 5.000379 },
+        { x = -1074.937, y = -1266.892, z = 5.9157404 }
+    },
+
     ['Garages'] = {
         { x = 227.60412, y = -781.9088, z = 30.722974, blip }, -- Central Parking
         { x = 128.84950, y = -1069.903, z = 29.192344, blip }, -- Garage Legion behind Fleeca
@@ -28,20 +43,38 @@ Config.BlipLocations = {
         { x = 2001.3833, y = 3071.0788, z = 47.049774, blip }, -- Sandy Yellow Jack
         { x = 692.11328, y = 636.97308, z = 128.60437, blip }, -- Vinewood Bowl
         { x = -318.7546, y = -921.5314, z = 31.605886, blip }, -- Parking near Red
-    },
 
-    ['Impounds'] = {
-        { x = 488.87152, y = -1313.118, z = 29.258459 }
     }
 }
 
 Config.Locations = {
+    ['PoliceImpound'] = {
+        [1] = { x = 449.41671, y = -1025.208, z = 28.585042, h = 188.27088, distance = 1.5, garageid = 'PoliceImpound', policeimpoundzone }
+    },
+
     ['Impound'] = {
-        ['Impound1'] = { x = 486.8348, y = -1308.405, z = 29.260835, h = 232.95101, distance = 1.5, garageid = 'Impound1', impoundzone }
+        ['Impound'] = { x = 486.8348, y = -1308.405, z = 29.260835, h = 232.95101, distance = 1.5, garageid = 'Impound', impoundzone },
+        ['Impound2'] = { x = 416.81744, y = -1628.055, z = 29.291938, h = 322.79992, distance = 1.5, garageid = 'Impound2', impoundzone },
+        ['Impound3'] = { x = 420.04788, y = -1638.866, z = 29.291929, h = 271.5086, distance = 1.5, garageid = 'Impound3', impoundzone },
+        ['Impound4'] = { x = 418.03948, y = -1645.921, z = 29.291929, h = 232.68969, distance = 1.5, garageid = 'Impound4', impoundzone },
+        ['Impound5'] = { x = 449.60653, y = -1961.479, z = 22.968311, h = 359.1278, distance = 1.5, garageid = 'Impound5', impoundzone },
+        ['Impound6'] = { x = 453.95385, y = -1966.669, z = 22.960746, h = 359.06469, distance = 1.5, garageid = 'Impound6', impoundzone },
+        ['Impound7'] = { x = 49.043972, y = -2567.012, z = 6.0045933, h = 174.60736, distance = 1.5, garageid = 'Impound7', impoundzone },
+        ['Impound8'] = { x = 45.943729, y = -2567.041, z = 6.0045933, h = 176.14433, distance = 1.5, garageid = 'Impound8', impoundzone },
+        ['Impound9'] = { x = 780.62084, y = -2953.893, z = 5.8007173, h = 248.2496, distance = 1.5, garageid = 'Impound9', impoundzone },
+        ['Impound10'] = { x = 781.09155, y = -2969.012, z = 5.8007187, h = 254.5487, distance = 1.5, garageid = 'Impound10', impoundzone },
+        ['Impound11'] = { x = 769.00067, y = -2963.563, z = 5.8007202, h = 282.73971, distance = 1.5, garageid = 'Impound11', impoundzone },
+        ['Impound12'] = { x = 768.88616, y = -2974.821, z = 5.8007202, h = 295.2951, distance = 1.5, garageid = 'Impound12', impoundzone },
+        ['Impound13'] = { x = -779.218, y = -2445.433, z = 14.570728, h = 336.74612, distance = 1.5, garageid = 'Impound13', impoundzone },
+        ['Impound14'] = { x = -785.5524, y = -2441.524, z = 14.570716, h = 335.22256, distance = 1.5, garageid = 'Impound14', impoundzone },
+        ['Impound15'] = { x = -740.5903, y = -1305.141, z = 5.000379, h = 231.85606, distance = 1.5, garageid = 'Impound15', impoundzone },
+        ['Impound16'] = { x = -744.778, y = -1310.367, z = 5.0003795, h = 232.75369, distance = 1.5, garageid = 'Impound16', impoundzone },
+        ['Impound17'] = { x = -1074.937, y = -1266.892, z = 5.9157404, h = 119.34638, distance = 1.5, garageid = 'Impound17', impoundzone },
+        ['Impound18'] = { x = -1078.517, y = -1260.7, z = 5.7181844, h = 125.37468, distance = 1.5, garageid = 'Impound18', impoundzone },
     },
 
     ['JobGarages'] = {
-        ['KCPD'] = {
+        ['kcpd'] = {
             ['KCPD1'] = { x = 445.84762, y = -994.1708, z = 25.699855, h = 90.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD1', parkingzone },
             ['KCPD2'] = { x = 446.18252, y = -988.8669, z = 25.699842, h = 90.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD2', parkingzone },
             ['KCPD3'] = { x = 437.13143, y = -994.4346, z = 25.699861, h = 280.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD3', parkingzone },
@@ -231,9 +264,6 @@ Config.Locations = {
        [173] = { x = 318.54885, y = -1241.507, z = 30.14874, h = 1.0, distance = 1.5, parkingname = 'Benzinonstanciq1', parkingzone }, -- Гараж до бензинонстанция
        [174] = { x = 311.6268, y = -1240.898, z = 29.813634, h = 1.0, distance = 1.5, parkingname = 'Benzinonstanciq1', parkingzone }, -- Гараж до бензинонстанция
        [175] = { x = 278.53103, y = -1241.763, z = 29.19775, h = 3.0, distance = 1.5, parkingname = 'Benzinonstanciq2', parkingzone }, -- Гараж до бензинонстанция
-       [176] = { x = 449.5198, y = -1025.016, z = 28.582317, h = 180.0, distance = 1.5, parkingname = 'MRPD', parkingzone }, -- MRPD
-       [177] = { x = 442.45065, y = -1025.842, z = 28.714359, h = 180.0, distance = 1.5, parkingname = 'MRPD', parkingzone }, -- MRPD
-       [178] = { x = 435.38906, y = -1026.485, z = 28.843893, h = 180.0, distance = 1.5, parkingname = 'MRPD', parkingzone }, -- MRPD
        [179] = { x = 298.4761, y = -1241.887, z = 29.290887, h = 2.0, distance = 1.5, parkingname = 'Benzinonstanciq2', parkingzone }, -- Гараж до бензинонстанция
        [180] = { x = 291.83084, y = -1241.8, z = 29.251855, h = 180.0, distance = 1.5, parkingname = 'Benzinonstanciq2', parkingzone }, -- Гараж до бензинонстанция
        [181] = { x = 285.05184, y = -1241.267, z = 29.224016, h = 180.0, distance = 1.5, parkingname = 'Benzinonstanciq2', parkingzone }, -- Гараж до бензинонстанция
@@ -696,9 +726,17 @@ Config.Locations = {
         [639] = { x = 555.63244, y = 2733.3859, z = 42.060134, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
         [640] = { x = 736.97766, y = 2512.4724, z = 73.225395, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
         [641] = { x = 736.47100, y = 2519.3498, z = 73.212989, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
-        [642] = { x = 555.63244, y = 2733.3859, z = 42.060134, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
-        [643] = { x = 555.63244, y = 2733.3859, z = 42.060134, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
-        [644] = { x = 555.63244, y = 2733.3859, z = 42.060134, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
+        -----------------------------------------------------------------------------------------------------------------------------------------------
+        [642] = { x = 459.90576, y = -1083.616, z = 29.202810, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [643] = { x = 459.43624, y = -1091.165, z = 29.202768, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [644] = { x = 459.31301, y = -1098.591, z = 29.201538, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [645] = { x = 459.02023, y = -1109.007, z = 29.200412, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [646] = { x = 472.53094, y = -1109.103, z = 29.199598, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [647] = { x = 472.23669, y = -1102.632, z = 29.200830, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [648] = { x = 472.39691, y = -1095.824, z = 29.202032, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [649] = { x = 472.50347, y = -1088.841, z = 29.203899, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [650] = { x = 485.56896, y = -1102.586, z = 29.200819, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [651] = { x = 485.35223, y = -1109.188, z = 29.199649, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
     }
 }
 
@@ -719,21 +757,21 @@ Config.VehicleLabels = {
 }
 
 Config.JobVehicles = {
-    ['KCPD'] = {
-        ['kadet'] = {
+    ['kcpd'] = {
+        [0] = {
             ['grade'] = 'kadet',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' }
             }
         },
-        ['third_grade'] = {
+        [1] = {
             ['grade'] = 'third_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
                 { model = 'policebretro' }
             }
         },
-        ['second_grade'] = {
+        [2] = {
             ['grade'] = 'second_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -741,7 +779,7 @@ Config.JobVehicles = {
                 { model = 'nforce6' }
             }
         },
-        ['first_grade'] = {
+        [3] = {
             ['grade'] = 'first_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -750,7 +788,7 @@ Config.JobVehicles = {
                 { model = 'nforce9' }
             }
         },
-        ['serjant_first_grade'] = {
+        [4] = {
             ['grade'] = 'serjant_first_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -760,7 +798,7 @@ Config.JobVehicles = {
                 { model = 'polthrust' }
             }
         },
-        ['serjant_second_grade'] = {
+        [5] = {
             ['grade'] = 'serjant_second_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -771,7 +809,7 @@ Config.JobVehicles = {
                 { model = 'nforce3' }
             }
         },
-        ['detectiv_first_grade'] = {
+        [6] = {
             ['grade'] = 'detectiv_first_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -783,7 +821,7 @@ Config.JobVehicles = {
                 { model = 'nforce10' }
             }
         },
-        ['detectiv_second_grade'] = {
+        [7] = {
             ['grade'] = 'detectiv_second_grade',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -796,7 +834,7 @@ Config.JobVehicles = {
                 { model = 'nforce1'}
             }
         },
-        ['leitenant'] = {
+        [8] = {
             ['grade'] = 'leitenant',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -809,7 +847,7 @@ Config.JobVehicles = {
                 { model = 'nforce1'}
             }
         },
-        ['captain'] = {
+        [9] = {
             ['grade'] = 'captain',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -823,7 +861,7 @@ Config.JobVehicles = {
                 { model = 'nforce11' }
             } 
         },
-        ['comandir'] = {
+        [10] = {
             ['grade'] = 'comandir',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -837,7 +875,7 @@ Config.JobVehicles = {
                 { model = 'nforce11' }
             }
         },
-        ['chief'] = {
+        [11] = {
             ['grade'] = 'chief',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
@@ -851,7 +889,7 @@ Config.JobVehicles = {
                 { model = 'nforce11' }
             }
         },
-        ['boss'] = {
+        [12] = {
             ['grade'] = 'boss',
             ['whitelisted_vehicles'] = {
                 { model = 'nforce7' },
