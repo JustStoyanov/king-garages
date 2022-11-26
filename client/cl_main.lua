@@ -1,28 +1,59 @@
-local ESX = exports['es_extended']:getSharedObject()
+local Framework = nil
+
+if Config.Framework == 'esx' then
+    Framework = exports['es_extended']:getSharedObject()
+elseif Config.Framework == 'qbcore' then
+    Framework = exports['qb-core']:GetCoreObject()
+elseif Config.Framework == 'king-core' then
+    Framework = nil
+end
 
 -- █▀ ▀█▀ █▀█ █ █▄░█ █▀▀ █▀ --
 -- ▄█ ░█░ █▀▄ █ █░▀█ █▄█ ▄█ --
 
-local PlayerJob, PlayerJobGrade = 'none', 0
-local PreviewedVehicle = nil
-local haveJobVehicle, inJobGarageZone = false, false
-local inGarageZone, inImpoundZone, inPoliceImpoundZone = false, false, false
+local PlayerJob, PlayerJobGrade, PreviewedVehicle = nil, nil, nil
 local PlayerGarage, VehicleMods, CurrentGarage, GarageInformationTable, PlayerDataJob = {}, {}, {}, {}, {}
+local inGarageZone, inImpoundZone, inPoliceImpoundZone, haveJobVehicle, inJobGarageZone = false, false, false, false, false
 
 -- █▀▀ █░█ █▄░█ █▀▀ ▀█▀ █ █▀█ █▄░█ █▀ --
 -- █▀░ █▄█ █░▀█ █▄▄ ░█░ █ █▄█ █░▀█ ▄█ --
 
-local function GetJob(action)
-    ESX.TriggerServerCallback('king-garages:server:getPlayerJob', function(information)
-        PlayerDataJob = information
-        for king,roleplay in pairs(PlayerDataJob) do
-            if action == 'name' then
-                PlayerJob = roleplay.job
-            elseif action == 'grade' then
-                PlayerJobGrade = roleplay.job_grade
-            end
-        end
+if Config.Framework == 'esx' then
+    RegisterNetEvent('esx:playerLoaded')
+    AddEventHandler('esx:playerLoaded', function(xPlayer)
+        PlayerJob = xPlayer.job.name
+        PlayerJobGrade = xPlayer.job.grade_name
     end)
+
+    RegisterNetEvent('esx:setJob')
+    AddEventHandler('esx:setJob', function(job)
+        PlayerJob = job.name
+        PlayerJobGrade = job.grade_name
+    end)
+elseif Config.Framework == 'qbcore' then
+    
+elseif Config.Framework == 'king-core' then
+    PlayerJob = exports['king-core']:GetPlayerJob()
+    PlayerJobGrade = exports['king-core']:GetPlayerJobGrade()
+end
+
+local function GetJob(action)
+    if Config.Framework == 'esx' then
+        if action == 'name' then
+            PlayerJob = Framework.GetPlayerData().job.name
+        elseif action == 'grade' then
+            PlayerJobGrade = Framework.GetPlayerData().job.grade_name
+        end
+    elseif Config.Framework == 'qbcore' then
+        if action ==  'name' then
+            -- PlayerJob = 
+        elseif action == 'grade' then
+            -- PlayerJobGrade = 
+        end
+    elseif Config.Framework == 'king-core' then
+        PlayerJob = exports['king-core']:GetPlayerJob()
+        PlayerJobGrade = exports['king-core']:GetPlayerJobGrade()
+    end
 end
 local function AddParkingLocations()
     for king,roleplay in pairs(Config.BlipLocations['Garages']) do
@@ -59,36 +90,38 @@ end
 local function AddJobGarages()
     GetJob('name')
     Wait(100)
-    for king,roleplay in pairs(Config.Locations['JobGarages'][PlayerJob]) do
-        roleplay.parkingzone = lib.zones.box({
-            coords = vec3(roleplay.x, roleplay.y, roleplay.z),
-            size = vec3(2.7, 5, 3),
-            rotation = roleplay.h,
-            debug = false,
-            inside = function()
-                if PlayerJob == roleplay.job then
-                    CurrentGarage.name = PlayerJob
-                    CurrentGarage.id = roleplay.garageid
-                    if Config.ControlPressing then
-                        if IsControlJustPressed(0, 38) then
-                            TriggerEvent('king-garages:client:openJobGarage')
+    if Config.Locations['JobGarages'][PlayerJob] ~= nil then
+        for king,roleplay in pairs(Config.Locations['JobGarages'][PlayerJob]) do
+            roleplay.parkingzone = lib.zones.box({
+                coords = vec3(roleplay.x, roleplay.y, roleplay.z),
+                size = vec3(2.7, 5, 3),
+                rotation = roleplay.h,
+                debug = false,
+                inside = function()
+                    if PlayerJob == roleplay.job then
+                        CurrentGarage.name = PlayerJob
+                        CurrentGarage.id = roleplay.garageid
+                        if Config.ControlPressing then
+                            if IsControlJustPressed(0, 38) then
+                                TriggerEvent('king-garages:client:openJobGarage')
+                            end
                         end
                     end
+                end,
+                onEnter = function()
+                    --if Config.ControlPressing then
+                        if PlayerJob == roleplay.job then
+                            exports['king-library']:TextUI('show', 'Служебен Гараж', 'info')
+                        end
+                    --end
+                    inJobGarageZone = true
+                end,
+                onExit = function()
+                    exports['king-library']:TextUI('hide')
+                    inJobGarageZone = false
                 end
-            end,
-            onEnter = function()
-                --if Config.ControlPressing then
-                    if PlayerJob == roleplay.job then
-                        exports['king-library']:TextUI('show', 'Служебен Гараж', 'info')
-                    end
-                --end
-                inJobGarageZone = true
-            end,
-            onExit = function()
-                exports['king-library']:TextUI('hide')
-                inJobGarageZone = false
-            end
-        })
+            })
+        end
     end
 end
 local function AddImpound()
@@ -158,8 +191,41 @@ local function AddPoliceImpound()
 end
 local function OpenPublicGarage(data, VehColission, FreezePosition, PedInVehicle, VehOut)
     if data.State == 'in' then
-        ESX.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
-            VehicleMods = vehdata
+        if Config.Framework == 'esx' then
+            Framework.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
+                VehicleMods = vehdata
+                for king,roleplay in pairs(VehicleMods) do
+                    if CurrentGarage.name == roleplay.garage then
+                        local GarageData = Config.Locations['ParkingLocations'][CurrentGarage.id]
+                        if not IsAnyVehicleNearPoint(GarageData.x, GarageData.y, GarageData.z, 5.0) then
+                            exports['king-core']:Vehicle('spawn', data.Model, GarageData.x, GarageData.y, GarageData.z, GarageData.h, function(spawnedvehicle)
+                                if not VehOut then
+                                    PreviewedVehicle = spawnedvehicle
+                                end
+                                Citizen.Wait(500)
+                                if roleplay.mods ~= nil then
+                                    Framework.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                end
+                                SetEntityCollision(spawnedvehicle, VehColission)
+                                FreezeEntityPosition(spawnedvehicle, FreezePosition)
+                                SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                                -- exports['fuel-old']:SetFuel(spawnedvehicle, data.Fuel)
+                                if VehOut then
+                                    TriggerServerEvent('king-garages:server:updateVehicle', data.Plate, data.Fuel, 'out', json.decode(roleplay.mods), 'Impound', CurrentGarage.id)
+                                end
+                            end, PedInVehicle, true)
+                        else
+                            Notify('Вече има кола на това място.', 'error')
+                        end
+                    else
+                        Notify('Колата ти е в друг гараж.', 'error')
+                    end
+                end
+            end, data.Plate)
+        elseif Config.Framework == 'qbcore' then
+
+        elseif Config.Framework == 'king-core' then
+            VehicleMods = KingCalls.Execute('king-garages:server:getVehicleData', data.Plate)
             for king,roleplay in pairs(VehicleMods) do
                 if CurrentGarage.name == roleplay.garage then
                     local GarageData = Config.Locations['ParkingLocations'][CurrentGarage.id]
@@ -170,7 +236,7 @@ local function OpenPublicGarage(data, VehColission, FreezePosition, PedInVehicle
                             end
                             Citizen.Wait(500)
                             if roleplay.mods ~= nil then
-                                ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                exports['king-core']:GetClientExports('SetVehicleMods', spawnedvehicle, json.decode(roleplay.mods))
                             end
                             SetEntityCollision(spawnedvehicle, VehColission)
                             FreezeEntityPosition(spawnedvehicle, FreezePosition)
@@ -187,7 +253,9 @@ local function OpenPublicGarage(data, VehColission, FreezePosition, PedInVehicle
                     Notify('Колата ти е в друг гараж.', 'error')
                 end
             end
-        end, data.Plate)
+        end
+    else
+        Notify('Колата ти е в наказателния паркинг.', 'error')
     end
 end
 local function OpenJobGarage(data, VehColission, FreezePosition, PedInVehicle, VehOut)
@@ -219,8 +287,40 @@ local function OpenJobGarage(data, VehColission, FreezePosition, PedInVehicle, V
 end
 local function OpenImpoundGarage(data, VehColission, FreezePosition, PedInVehicle, VehOut)
     if data.State == 'out' then
-        ESX.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
-            VehicleMods = vehdata
+        if Config.Framework == 'esx' then
+            Framework.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
+                VehicleMods = vehdata
+                for king,roleplay in pairs(VehicleMods) do
+                    if CurrentGarage.name == roleplay.garage then
+                        if not IsAnyVehicleNearPoint(Config.Locations['Impound'][CurrentGarage.id].x, Config.Locations['Impound'][CurrentGarage.id].y, Config.Locations['Impound'][CurrentGarage.id].z, 5.0) then
+                            exports['king-core']:Vehicle('spawn', data.Model, Config.Locations['Impound'][CurrentGarage.id].x, Config.Locations['Impound'][CurrentGarage.id].y, Config.Locations['Impound'][CurrentGarage.id].z, Config.Locations['Impound'][CurrentGarage.id].h, function(spawnedvehicle)
+                                if not VehOut then
+                                    PreviewedVehicle = spawnedvehicle
+                                end
+                                Citizen.Wait(500)
+                                if roleplay.mods ~= nil then
+                                    Framework.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                end
+                                SetEntityCollision(spawnedvehicle, VehColission)
+                                FreezeEntityPosition(spawnedvehicle, FreezePosition)
+                                SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                                --exports['fuel-old']:SetFuel(spawnedvehicle, data.Fuel)
+                                if VehOut then
+                                    TriggerServerEvent('king-garages:server:updateVehicle', data.Plate, data.Fuel, 'out', json.decode(roleplay.mods), 'Impound', CurrentGarage.id)
+                                end
+                            end, PedInVehicle)
+                        else
+                            Notify('Вече има кола на това място.', 'error')
+                        end
+                    else
+                        Notify('Колата ти е в друг гараж.', 'error')
+                    end
+                end
+            end, data.Plate)
+        elseif Config.Framework == 'qbcore' then
+
+        elseif Config.Framework == 'king-core' then
+            VehicleMods = KingCalls.Execute('king-garages:server:getVehicleData', data.Plate)
             for king,roleplay in pairs(VehicleMods) do
                 if CurrentGarage.name == roleplay.garage then
                     if not IsAnyVehicleNearPoint(Config.Locations['Impound'][CurrentGarage.id].x, Config.Locations['Impound'][CurrentGarage.id].y, Config.Locations['Impound'][CurrentGarage.id].z, 5.0) then
@@ -230,7 +330,7 @@ local function OpenImpoundGarage(data, VehColission, FreezePosition, PedInVehicl
                             end
                             Citizen.Wait(500)
                             if roleplay.mods ~= nil then
-                                ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                exports['king-core']:GetClientExports('SetVehicleMods', spawnedvehicle, json.decode(roleplay.mods))
                             end
                             SetEntityCollision(spawnedvehicle, VehColission)
                             FreezeEntityPosition(spawnedvehicle, FreezePosition)
@@ -247,13 +347,45 @@ local function OpenImpoundGarage(data, VehColission, FreezePosition, PedInVehicl
                     Notify('Колата ти е в друг гараж.', 'error')
                 end
             end
-        end, data.Plate)
+        end
     end
 end
 local function OpenPoliceImpoundGarage(data, VehColission, FreezePosition, PedInVehicle, VehOut)
     if data.State == 'in' or data.State == 'out' then
-        ESX.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
-            VehicleMods = vehdata
+        if Config.Framework == 'esx' then
+            Framework.TriggerServerCallback('king-garages:server:getVehicleData', function(vehdata)
+                VehicleMods = vehdata
+                for king,roleplay in pairs(VehicleMods) do
+                    if CurrentGarage.name == roleplay.garage then
+                        if not IsAnyVehicleNearPoint(Config.Locations['PoliceImpound'][CurrentGarage.id].x, Config.Locations['PoliceImpound'][CurrentGarage.id].y, Config.Locations['PoliceImpound'][CurrentGarage.id].z, 5.0) then
+                            exports['king-core']:Vehicle('spawn', data.Model, Config.Locations['PoliceImpound'][CurrentGarage.id].x, Config.Locations['PoliceImpound'][CurrentGarage.id].y, Config.Locations['PoliceImpound'][CurrentGarage.id].z, Config.Locations['PoliceImpound'][CurrentGarage.id].h, function(spawnedvehicle)
+                                if not VehOut then
+                                    PreviewedVehicle = spawnedvehicle
+                                end
+                                Citizen.Wait(500)
+                                if roleplay.mods ~= nil then
+                                    Framework.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                end
+                                SetEntityCollision(spawnedvehicle, VehColission)
+                                FreezeEntityPosition(spawnedvehicle, FreezePosition)
+                                SetVehicleNumberPlateText(spawnedvehicle, data.Plate)
+                                --exports['fuel-old']:SetFuel(spawnedvehicle, data.Fuel)
+                                if VehOut then
+                                    TriggerServerEvent('king-garages:server:updateVehicle', data.Plate, data.Fuel, 'out', json.decode(roleplay.mods), 'PoliceImpound', CurrentGarage.id)
+                                end
+                            end, PedInVehicle)
+                        else
+                            Notify('Вече има кола на това място.', 'error')
+                        end
+                    else
+                        Notify('Колата ти е в друг гараж.', 'error')
+                    end
+                end
+            end, data.Plate)
+        elseif Config.Framework == 'qbcore' then
+
+        elseif Config.Framework == 'king-core' then
+            VehicleMods = KingCalls.Execute('king-garages:server:getVehicleData', data.Plate)
             for king,roleplay in pairs(VehicleMods) do
                 if CurrentGarage.name == roleplay.garage then
                     if not IsAnyVehicleNearPoint(Config.Locations['PoliceImpound'][CurrentGarage.id].x, Config.Locations['PoliceImpound'][CurrentGarage.id].y, Config.Locations['PoliceImpound'][CurrentGarage.id].z, 5.0) then
@@ -263,7 +395,7 @@ local function OpenPoliceImpoundGarage(data, VehColission, FreezePosition, PedIn
                             end
                             Citizen.Wait(500)
                             if roleplay.mods ~= nil then
-                                ESX.Game.SetVehicleProperties(spawnedvehicle, json.decode(roleplay.mods))
+                                exports['king-core']:GetClientExports('SetVehicleMods', spawnedvehicle, json.decode(roleplay.mods))
                             end
                             SetEntityCollision(spawnedvehicle, VehColission)
                             FreezeEntityPosition(spawnedvehicle, FreezePosition)
@@ -280,7 +412,7 @@ local function OpenPoliceImpoundGarage(data, VehColission, FreezePosition, PedIn
                     Notify('Колата ти е в друг гараж.', 'error')
                 end
             end
-        end, data.Plate)
+        end
     end
 end
 
@@ -301,17 +433,50 @@ RegisterNUICallback('UnselectVehicle', function()
 end)
 
 RegisterNUICallback('VehicleNotInGarage', function(data)
-    if data.State == 'in' then
-        ESX.TriggerServerCallback('king-garages:server:getVehicleData', function(vehicleData)
-            GarageInformationTable = vehicleData
+    if data.Pri4ina == nil then
+        if data.State == 'in' then
+            if Config.Framework == 'esx' then
+                Framework.TriggerServerCallback('king-garages:server:getVehicleData', function(vehicleData)
+                    GarageInformationTable = vehicleData
+                    exports['king-library']:Notify('Колата ти е в дург гараж, маркирах ти го на GPS-а. Пак заповядай!', 'primary')
+                    for king,roleplay in pairs(GarageInformationTable) do
+                        local garagenumber = roleplay.garageid
+                        SetNewWaypoint(Config.Locations['ParkingLocations'][tonumber(garagenumber)].x, Config.Locations['ParkingLocations'][tonumber(garagenumber)].y)
+                    end
+                end, data.Plate)
+            elseif Config.Framework == 'qbcore' then
+
+            elseif Config.Framework == 'king-core' then
+                GarageInformationTable = KingCalls.Execute('king-garages:server:getVehicleData', data.Plate)
+                exports['king-library']:Notify('Колата ти е в дург гараж, маркирах ти го на GPS-а. Пак заповядай!', 'primary')
+                for king,roleplay in pairs(GarageInformationTable) do
+                    local garagenumber = roleplay.garageid
+                    SetNewWaypoint(Config.Locations['ParkingLocations'][tonumber(garagenumber)].x, Config.Locations['ParkingLocations'][tonumber(garagenumber)].y)
+                end
+            end
+        else
+            exports['king-library']:Notify('Колата ти е в наказателен паркинг, не ми се мисли кво си правил.', 'error')
+        end
+    else
+        if Config.Framework == 'esx' then
+            Framework.TriggerServerCallback('king-garages:server:getVehicleData', function(vehicleData)
+                GarageInformationTable = vehicleData
+                exports['king-library']:Notify('Колата ти е в дург гараж, маркирах ти го на GPS-а. Пак заповядай!', 'primary')
+                for king,roleplay in pairs(GarageInformationTable) do
+                    local garagenumber = roleplay.garageid
+                    SetNewWaypoint(Config.Locations['Impound'].x, Config.Locations['Impound'].y)
+                end
+            end, data.Plate)
+        elseif Config.Framework == 'qbcore' then
+            
+        elseif Config.Framework == 'king-core' then
+            GarageInformationTable = KingCalls.Execute('king-garages:server:getVehicleData', data.Plate)
             exports['king-library']:Notify('Колата ти е в дург гараж, маркирах ти го на GPS-а. Пак заповядай!', 'primary')
             for king,roleplay in pairs(GarageInformationTable) do
                 local garagenumber = roleplay.garageid
-                SetNewWaypoint(Config.Locations['ParkingLocations'][tonumber(garagenumber)].x, Config.Locations['ParkingLocations'][tonumber(garagenumber)].y)
+                SetNewWaypoint(Config.Locations['Impound'].x, Config.Locations['Impound'].y)
             end
-        end, data.Plate)
-    else
-        exports['king-library']:Notify('Колата ти е в наказателен паркинг, не ми се мисли кво си правил.', 'error')
+        end
     end
 end)
 
@@ -350,15 +515,21 @@ end)
 -- █░░ █▀█ █▀█ █▀█ █▀ --
 -- █▄▄ █▄█ █▄█ █▀▀ ▄█ --
 
+local playerNotLoaded = true
 Citizen.CreateThread(function()
-    Wait(10000)
-    GetJob('name')
-    GetJob('grade')
-    Wait(100)
     AddParkingLocations()
-    AddJobGarages()
     AddImpound()
-    AddPoliceImpound()
+    AddPoliceImpound()  
+    -- Job Garages --
+    while playerNotLoaded do
+        if NetworkIsPlayerActive(PlayerId()) then
+            playerNotLoaded = false
+            AddJobGarages()
+        else
+            playerNotLoaded = true
+        end
+        Citizen.Wait(500)
+    end
 end)
 
 -- █▀▀ █░█ █▀▀ █▄░█ ▀█▀ █▀ --
@@ -369,7 +540,39 @@ AddEventHandler('king-garages:client:opengarage', function()
     if not IsPedInAnyVehicle(PlayerPedId(), false) then
         local PlayerVehicles = {}
         PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
-        ESX.TriggerServerCallback("king-garages:server:getPlayerVehicles", function(result)
+        if Config.Framework == 'esx' then
+            Framework.TriggerServerCallback("king-garages:server:getPlayerVehicles", function(result)
+                if result ~= nil then
+                    table.wipe(PlayerVehicles)
+                    for king,roleplay in pairs(result) do
+                        local vehicleData = {
+                            ['Name'] = Config.VehicleLabels[roleplay.model], 
+                            ['Model'] = roleplay.model, 
+                            ['Plate'] = roleplay.plate, 
+                            ['Garage'] = roleplay.garage,
+                            ['State'] = roleplay.state, 
+                            ['Fuel'] = roleplay.fuel, 
+                            ['Motor'] = 1000, 
+                            ['Body'] = 1000,
+                            ['CurrentGarage'] = CurrentGarage.name
+                        }
+                        table.insert(PlayerVehicles, vehicleData)
+                    end
+                    -- Opens the UI --
+                    SetNuiFocus(true, true)
+                    SendNUIMessage({
+                        action = "OpenGarage", 
+                        garagevehicles = PlayerVehicles
+                    })
+                    SetCursorLocation(0.9, 0.25)
+                else
+                    Notify('Нямаш автомобили в гаража си.', 'error')
+                end
+            end)
+        elseif Config.Framework == 'qbcore' then
+
+        elseif Config.Framework == 'king-core' then
+            local result = KingCalls.Execute('king-garages:server:getPlayerVehicles')
             if result ~= nil then
                 table.wipe(PlayerVehicles)
                 for king,roleplay in pairs(result) do
@@ -396,15 +599,22 @@ AddEventHandler('king-garages:client:opengarage', function()
             else
                 Notify('Нямаш автомобили в гаража си.', 'error')
             end
-        end)
+        end
     else
         if IsPedInAnyVehicle(PlayerPedId()) then
             local plate = GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId()))
             local fuel = 100 -- exports['fuel-old']:GetFuel(GetVehiclePedIsIn(PlayerPedId()))
-            local mods = ESX.Game.GetVehicleProperties(GetVehiclePedIsIn(PlayerPedId()))
+            local mods = nil
+            if Config.Framework == 'esx' then
+                mods = Framework.Game.GetVehicleProperties(GetVehiclePedIsIn(PlayerPedId()))
+            elseif Config.Framework == 'qbcore' then
+
+            elseif Config.Framework == 'king-core' then
+                mods = exports['king-core']:GetVehicleMods(GetVehiclePedIsIn(PlayerPedId()))
+            end
     
             TaskLeaveAnyVehicle(PlayerPedId())
-            TriggerServerEvent('king-garages:server:updateVehicle', plate, fuel, 'in', mods, CurrentGarage.name, CurrentGarage.id)
+            TriggerServerEvent('king-garages:server:updateVehicle', plate, fuel, 'in', mods, CurrentGarage.name, CurrentGarage.name)
             Citizen.Wait(1700)
             DeleteEntity(GetVehiclePedIsIn(PlayerPedId(), true))
         else
@@ -457,11 +667,43 @@ end)
 RegisterNetEvent('king-garages:client:openImpound')
 AddEventHandler('king-garages:client:openImpound', function()
     local ImpoundedVehicles = {}
-    ESX.TriggerServerCallback('king-garages:server:getPlayerVehicles', function(vehicleData)
+    if Config.Framework == 'esx' then
+        Framework.TriggerServerCallback('king-garages:server:getPlayerVehicles', function(vehicleData)
+            if vehicleData ~= nil then
+                table.wipe(ImpoundedVehicles)
+                for king,roleplay in pairs(vehicleData) do
+                    if roleplay.garageid == 'Impound' and roleplay.state == 'out' then
+                        local VehicleInformation = {
+                            ['Name'] = Config.VehicleLabels[roleplay.model], 
+                            ['Model'] = roleplay.model, 
+                            ['Plate'] = roleplay.plate, 
+                            ['Garage'] = roleplay.garage,
+                            ['State'] = roleplay.state, 
+                            ['Fuel'] = roleplay.fuel, 
+                            ['Motor'] = 1000, 
+                            ['Body'] = 1000,
+                            ['CurrentGarage'] = 'Impound'
+                        }
+                        table.insert(ImpoundedVehicles, VehicleInformation)
+                    end
+                end
+                -- Opens the UI --
+                SetNuiFocus(true, true)
+                SendNUIMessage({
+                    action = "OpenGarage",
+                    garagevehicles = ImpoundedVehicles
+                })
+                SetCursorLocation(0.9, 0.25)
+            end
+        end)
+    elseif Config.Framework == 'qbcore' then
+
+    elseif Config.Framework == 'king-core' then
+        local vehicleData = KingCalls.Execute('king-garages:server:getPlayerVehicles')
         if vehicleData ~= nil then
             table.wipe(ImpoundedVehicles)
             for king,roleplay in pairs(vehicleData) do
-                if roleplay.garage == 'Impound' then
+                if roleplay.garageid == 'Impound' and roleplay.state == 'out' then
                     local VehicleInformation = {
                         ['Name'] = Config.VehicleLabels[roleplay.model], 
                         ['Model'] = roleplay.model, 
@@ -484,13 +726,44 @@ AddEventHandler('king-garages:client:openImpound', function()
             })
             SetCursorLocation(0.9, 0.25)
         end
-    end)
+    end
 end)
 
 RegisterNetEvent('king-garages:client:openPoliceImpound')
 AddEventHandler('king-garages:client:openPoliceImpound', function()
     local PoliceImpoundedVehicles = {}
-    ESX.TriggerServerCallback('king-garages:server:getPlayerVehicles', function(vehicleData)
+    if Config.Framework == 'esx' then
+        Framework.TriggerServerCallback('king-garages:server:getPlayerVehicles', function(vehicleData)
+            if vehicleData ~= nil then
+                table.wipe(PoliceImpoundedVehicles)
+                for king,roleplay in pairs(vehicleData) do
+                    if roleplay.garage == 'PoliceImpound' then
+                        table.insert(PoliceImpoundedVehicles, {
+                            ['Name'] = Config.VehicleLabels[roleplay.model], 
+                            ['Model'] = roleplay.model, 
+                            ['Plate'] = roleplay.plate, 
+                            ['Garage'] = roleplay.garage,
+                            ['State'] = roleplay.state, 
+                            ['Fuel'] = roleplay.fuel, 
+                            ['Motor'] = 1000, 
+                            ['Body'] = 1000,
+                            ['CurrentGarage'] = 'PoliceImpound'
+                        })
+                    end
+                end
+                -- Opens the UI --
+                SetNuiFocus(true, true)
+                SendNUIMessage({
+                    action = "OpenGarage",
+                    garagevehicles = PoliceImpoundedVehicles
+                })
+                SetCursorLocation(0.9, 0.25)
+            end
+        end)
+    elseif Config.Framework == 'qbcore' then
+
+    elseif Config.Framework == 'king-core' then
+        local vehicleData = KingCalls.Execute('king-garages:server:getPlayerVehicles')
         if vehicleData ~= nil then
             table.wipe(PoliceImpoundedVehicles)
             for king,roleplay in pairs(vehicleData) do
@@ -516,7 +789,7 @@ AddEventHandler('king-garages:client:openPoliceImpound', function()
             })
             SetCursorLocation(0.9, 0.25)
         end
-    end)
+    end
 end)
 
 -- █▀▄ █▀▀ █▄▄ █░█ █▀▀ --
@@ -525,9 +798,8 @@ end)
 if Config.DevMode then
     RegisterCommand('garage_test', function()
         -- If I want to test something, I will type it here
-        local mods = ESX.Game.GetVehicleProperties(GetVehiclePedIsIn(PlayerPedId()))
-        TriggerServerEvent('king-garages:server:updateVehicle', GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), 100, 'in', mods, 'PoliceImpound', CurrentGarage.id)
-    end)
+        AddJobGarages()
+   end)
 end
 
 -- █▀▀ ▀▄▀ █▀█ █▀█ █▀█ ▀█▀ █▀ --
@@ -543,20 +815,4 @@ end
 
 function InsideImpoundZone()
     return inImpoundZone
-end
-
-ESX.Game.RequestNetworkControlOfEntity = function(entityHandle)
-    if entityHandle and DoesEntityExist(entityHandle) then
-        local attempt = 0
-
-        while DoesEntityExist(entityHandle) and not NetworkHasControlOfEntity(entityHandle) and attempt < 5000 do
-            Citizen.Wait(1)
-            NetworkRequestControlOfEntity(entityHandle)
-            attempt = attempt + 1
-        end
-        
-        return (DoesEntityExist(entityHandle) and NetworkHasControlOfEntity(entityHandle))
-    else
-        return false
-    end
 end

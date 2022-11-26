@@ -2,6 +2,7 @@ Config = {}
 
 -- Configuration --
 
+Config.Framework = 'esx'
 Config.DevMode = true
 Config.ImpoundName = 'Impound'
 Config.ControlPressing = false
@@ -43,6 +44,9 @@ Config.BlipLocations = {
         { x = 2001.3833, y = 3071.0788, z = 47.049774, blip }, -- Sandy Yellow Jack
         { x = 692.11328, y = 636.97308, z = 128.60437, blip }, -- Vinewood Bowl
         { x = -318.7546, y = -921.5314, z = 31.605886, blip }, -- Parking near Red
+        { x = -56.06664, y = -1833.635, z = 26.655824, blip }, -- Groove Street do benzinonstanciqta
+        { x = -331.1633, y = -2731.302, z = 6.0250148, blip }, -- Nqkude do vodata
+        { x = -2032.317, y = -460.7234, z = 11.462878, blip } -- Great Ocean Highway
 
     }
 }
@@ -81,7 +85,7 @@ Config.Locations = {
             ['KCPD4'] = { x = 437.67630, y = -988.9340, z = 25.700178, h = 280.0, distance = 1.5, job = 'kcpd', garageid = 'KCPD4', parkingzone }
         },
     
-        ['King Tunes'] = {
+        ['king_tunes'] = {
             ['King Tunes1'] = { x = 124.49122, y = -3047.531, z = 7.0408916, h = 260.0, distance = 1.5, job = 'king_tunes', garageid = 'King Tunes1', parkingzone },
             ['King Tunes2'] = { x = 124.47714, y = -3041.367, z = 7.0408916, h = 260.0, distance = 1.5, job = 'king_tunes', garageid = 'King Tunes2', parkingzone },
             ['King Tunes3'] = { x = 124.53906, y = -3035.318, z = 7.0408916, h = 260.0, distance = 1.5, job = 'king_tunes', garageid = 'King Tunes3', parkingzone },
@@ -680,31 +684,31 @@ Config.Locations = {
         [593] = { x = -1906.075, y = 2008.9216, z = 141.5624, h = 270.0, distance = 1.5, parkingname = 'Buen Vino Road', parkingzone }, -- Vinarna
         [594] = { x = -1906.136, y = 2004.6796, z = 141.82119, h = 270.0, distance = 1.5, parkingname = 'Buen Vino Road', parkingzone }, -- Vinarna
         [595] = { x = -1906.251, y = 2000.2448, z = 141.99693, h = 270.0, distance = 1.5, parkingname = 'Buen Vino Road', parkingzone }, -- Vinarna
-        [596] = { x = -1895.592, y = 2034.46, z = 140.74145, h = 160.0, distance = 1.5, parkingname = 'Buen Vino Road', parkingzone }, -- Vinarna
+        [596] = { x = -1895.592, y = 2034.46, z = 140.7414500, h = 160.0, distance = 1.5, parkingname = 'Buen Vino Road', parkingzone }, -- Vinarna
         [597] = { x = -1899.751, y = 2035.7899, z = 140.74035, h = 160.0, distance = 1.5, parkingname = 'Buen Vino Road', parkingzone }, -- Vinarna
-        [598] = { x = 584.34075, y = 2721.5781, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [599] = { x = 581.0935, y = 2721.333, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [600] = { x = 578.23797, y = 2720.758, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [601] = { x = 575.15814, y = 2720.8178, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [602] = { x = 572.11071, y = 2720.1457, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [603] = { x = 568.81243, y = 2719.1696, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [604] = { x = 565.70019, y = 2719.124, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [605] = { x = 562.88385, y = 2719.1809, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [606] = { x = 559.78912, y = 2719.2221, z = 42.060207, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [607] = { x = 602.69213, y = 2722.3449, z = 41.891757, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [608] = { x = 605.78771, y = 2722.6406, z = 41.891757, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [609] = { x = 608.72106, y = 2723.0363, z = 41.891757, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [610] = { x = 611.9107, y = 2723.4196, z = 41.891757, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [611] = { x = 615.03741, y = 2723.4443, z = 41.884864, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [612] = { x = 618.04901, y = 2723.9809, z = 41.854522, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [613] = { x = 621.3255, y = 2724.3127, z = 41.828632, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [614] = { x = 624.20074, y = 2724.6264, z = 41.805248, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [615] = { x = 626.90893, y = 2724.9697, z = 41.797904, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [616] = { x = 629.85064, y = 2725.2949, z = 41.794979, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [598] = { x = 584.34075, y = 2721.5781, z = 42.06020700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [599] = { x = 581.0935, y = 2721.333, z = 42.0602070000, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [600] = { x = 578.23797, y = 2720.758, z = 42.060207000, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [601] = { x = 575.15814, y = 2720.8178, z = 42.06020700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [602] = { x = 572.11071, y = 2720.1457, z = 42.06020700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [603] = { x = 568.81243, y = 2719.1696, z = 42.06020700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [604] = { x = 565.70019, y = 2719.124, z = 42.060207000, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [605] = { x = 562.88385, y = 2719.1809, z = 42.06020700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [606] = { x = 559.78912, y = 2719.2221, z = 42.06020700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [607] = { x = 602.69213, y = 2722.3449, z = 41.89175700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [608] = { x = 605.78771, y = 2722.6406, z = 41.89175700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [609] = { x = 608.72106, y = 2723.0363, z = 41.89175700, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [610] = { x = 611.9107, y = 2723.4196, z = 41.891757000, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [611] = { x = 615.03741, y = 2723.4443, z = 41.88486400, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [612] = { x = 618.04901, y = 2723.9809, z = 41.85452200, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [613] = { x = 621.3255, y = 2724.3127, z = 41.828632000, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [614] = { x = 624.20074, y = 2724.6264, z = 41.80524800, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [615] = { x = 626.90893, y = 2724.9697, z = 41.79790400, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [616] = { x = 629.85064, y = 2725.2949, z = 41.79497999, h = 5.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
         [617] = { x = 623.12371, y = 2738.7358, z = 41.971622, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
         [618] = { x = 620.15246, y = 2738.6887, z = 41.965553, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [619] = { x = 617.05126, y = 2738.1953, z = 41.95335, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
-        [620] = { x = 614.29772, y = 2737.914, z = 41.95166, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [619] = { x = 617.05126, y = 2738.1953, z = 41.953350, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
+        [620] = { x = 614.29772, y = 2737.914, z = 41.9516600, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
         [621] = { x = 610.87701, y = 2737.6098, z = 41.965934, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
         [622] = { x = 607.90124, y = 2737.3791, z = 41.967185, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
         [623] = { x = 604.87646, y = 2737.2741, z = 41.991008, h = 185.0, distance = 1.5, parkingname = 'Route68', parkingzone }, -- Do magazin za drehi, Sandi
@@ -727,16 +731,80 @@ Config.Locations = {
         [640] = { x = 736.97766, y = 2512.4724, z = 73.225395, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
         [641] = { x = 736.47100, y = 2519.3498, z = 73.212989, h = 270.0, distance = 1.5, parkingname = 'Rebel', parkingzone }, -- Rebel ,maluk parking
         -----------------------------------------------------------------------------------------------------------------------------------------------
-        [642] = { x = 459.90576, y = -1083.616, z = 29.202810, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [643] = { x = 459.43624, y = -1091.165, z = 29.202768, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [644] = { x = 459.31301, y = -1098.591, z = 29.201538, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [645] = { x = 459.02023, y = -1109.007, z = 29.200412, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [646] = { x = 472.53094, y = -1109.103, z = 29.199598, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [647] = { x = 472.23669, y = -1102.632, z = 29.200830, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [648] = { x = 472.39691, y = -1095.824, z = 29.202032, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [649] = { x = 472.50347, y = -1088.841, z = 29.203899, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [650] = { x = 485.56896, y = -1102.586, z = 29.200819, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
-        [651] = { x = 485.35223, y = -1109.188, z = 29.199649, h = 80.0, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [642] = { x = 459.90576, y = -1083.616, z = 29.202810, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [643] = { x = 459.43624, y = -1091.165, z = 29.202768, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [644] = { x = 459.31301, y = -1098.591, z = 29.201538, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [645] = { x = 459.02023, y = -1109.007, z = 29.200412, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [646] = { x = 472.53094, y = -1109.103, z = 29.199598, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [647] = { x = 472.23669, y = -1102.632, z = 29.200830, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [648] = { x = 472.39691, y = -1095.824, z = 29.202032, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [649] = { x = 472.50347, y = -1088.841, z = 29.203899, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [650] = { x = 485.56896, y = -1102.586, z = 29.200819, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [651] = { x = 485.35223, y = -1109.188, z = 29.199649, h = 80.00, distance = 1.5, parkingname = 'Near MRPD', parkingzone }, -- Garaj do RPU
+        [652] = { x = -326.9849, y = -1495.046, z = 30.67218, h = 0.0000, distance = 1.5, parkingname = 'Gas Station Innocence Boulevard', parkingzone }, -- Benzinonstanciq
+        [653] = { x = -330.2414, y = -1495.059, z = 30.669889, h = 0.000, distance = 1.5, parkingname = 'Gas Station Innocence Boulevard', parkingzone }, -- Benzinonstanciq
+        [654] = { x = -333.3588, y = -1494.695, z = 30.645008, h = 0.000, distance = 1.5, parkingname = 'Gas Station Innocence Boulevard', parkingzone }, -- Benzinonstanciq
+        [655] = { x = -336.5367, y = -1494.517, z = 30.616523, h = 0.000, distance = 1.5, parkingname = 'Gas Station Innocence Boulevard', parkingzone }, -- Benzinonstanciq
+        [656] = { x = -62.75103, y = -1840.507, z = 26.683807, h = 320.0, distance = 1.5, parkingname = 'Grove Street', parkingzone }, -- Garaj Groove Street
+        [657] = { x = -60.11374, y = -1842.68, z = 26.583816, h = 320.00, distance = 1.5, parkingname = 'Grove Street', parkingzone }, -- Garaj Groove Street
+        [658] = { x = -56.97837, y = -1844.501, z = 26.478771, h = 320.0, distance = 1.5, parkingname = 'Grove Street', parkingzone }, -- Garaj Groove Street
+        [659] = { x = -54.3247, y = -1846.998, z = 26.369958, h= 320.000, distance = 1.5, parkingname = 'Grove Street', parkingzone }, -- Garaj Groove Street
+        [660] = { x = -51.75278, y = -1848.89, z = 26.273418, h= 320.000, distance = 1.5, parkingname = 'Grove Street', parkingzone }, -- Garaj Groove Street
+        [661] = { x = -44.72821, y = -1840.927, z = 26.202911, h = 144.0, distance = 1.5, parkingname = 'Grove Street', parkingzone }, -- Garaj Groove Street
+        [662] = { x = -59.16369, y = -1745.715, z = 29.351448, h = 54.628005, distance = 1.5, parkingname = 'Grove Street Gas Station', parkingzone }, -- Garaj Groove Street
+        [663] = { x = -57.38534, y = -1743.208, z = 29.355722, h = 51.258850, distance = 1.5, parkingname = 'Grove Street Gas Station', parkingzone }, -- Garaj Groove Street
+        [664] = { x = -51.31116, y = -1762.02, z = 29.10713, h = 231.5482300, distance = 1.5, parkingname = 'Grove Street Gas Station', parkingzone }, -- Garaj Groove Street
+        [665] = { x = -54.34522, y = -1764.074, z = 28.945116, h = 53.748622, distance = 1.5, parkingname = 'Grove Street Gas Station', parkingzone }, -- Garaj Groove Street
+        [666] = { x = -338.889, y = -2737.189, z = 6.0356016, h = 315.00, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [667] = { x = -336.8903, y = -2739.398, z = 6.0317058, h = 315.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [668] = { x = -334.6516, y = -2741.626, z = 6.0276103, h = 315.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [669] = { x = -332.6263, y = -2744.392, z = 6.0237307, h = 315.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [670] = { x = -330.3676, y = -2746.287, z = 6.0200681, h = 315.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [671] = { x = -327.8132, y = -2748.496, z = 6.0152812, h = 315.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [672] = { x = -325.5519, y = -2750.993, z = 6.011496, h = 315.00, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [673] = { x = -313.8648, y = -2739.022, z = 6.0028123, h = 137.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [674] = { x = -318.3732, y = -2734.662, z = 6.004796, h = 129.05, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [675] = { x = -320.7633, y = -2731.835, z = 6.0056123, h = 140.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [676] = { x = -322.8147, y = -2729.821, z = 6.008902, h = 130.00, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [677] = { x = -324.9114, y = -2727.406, z = 6.0085372, h = 130.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [678] = { x = -327.5473, y = -2725.031, z = 6.0098381, h = 130.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [679] = { x = -329.4511, y = -2723.149, z = 6.0088291, h = 130.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [680] = { x = -332.0167, y = -2720.823, z = 6.0066895, h = 130.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [681] = { x = -334.0043, y = -2718.612, z = 6.0049304, h = 130.0, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [682] = { x = -316.0682, y = -2736.842, z = 6.003086, h = 130.00, distance = 1.5, parkingname = 'Plaice place', parkingzone }, -- Do vodichka
+        [683] = { x = -2051.286, y = -448.8803, z = 11.407938, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [684] = { x = -2048.987, y = -451.1124, z = 11.404816, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [685] = { x = -2046.778, y = -452.9971, z = 11.404516, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [686] = { x = -2044.147, y = -455.0076, z = 11.407381, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [687] = { x = -2041.889, y = -457.1177, z = 11.404523, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [688] = { x = -2039.333, y = -458.9783, z = 11.408491, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [689] = { x = -2037.023, y = -460.8849, z = 11.409029, h = 140.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [690] = { x = -2064.228, y = -453.0922, z = 11.638699, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [691] = { x = -2061.941, y = -455.9956, z = 11.680035, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [692] = { x = -2059.61, y = -458.1794, z = 11.686021, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [693] = { x = -2057.36, y = -460.2564, z = 11.690912, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [694] = { x = -2049.727, y = -466.3872, z = 11.679973, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [695] = { x = -2047.362, y = -468.2142, z = 11.675124, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [696] = { x = -2044.789, y = -470.2901, z = 11.667093, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [697] = { x = -2042.347, y = -472.3358, z = 11.652577, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [698] = { x = -2040.087, y = -474.0328, z = 11.635981, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [699] = { x = -2033.291, y = -479.8599, z = 11.685334, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [700] = { x = -2031.051, y = -481.7519, z = 11.699561, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [701] = { x = -2029.133, y = -483.8572, z = 11.719941, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [702] = { x = -2026.216, y = -485.7655, z = 11.705181, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [703] = { x = -2024.145, y = -487.5836, z = 11.712049, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [704] = { x = -2017.494, y = -493.076, z = 11.707118, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [705] = { x = -2015.299, y = -495.0838, z = 11.708938, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [706] = { x = -2013.072, y = -497.0268, z = 11.70047, h = 320.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [707] = { x = -2005.402, y = -487.7564, z = 11.409651, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [708] = { x = -2007.83, y = -485.624, z = 11.410303, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [709] = { x = -2012.078, y = -481.3266, z = 11.418776, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [710] = { x = -2017.088, y = -477.5171, z = 11.412234, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [712] = { x = -2021.567, y = -473.361, z = 11.417022, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [713] = { x = -2024.228, y = -471.6069, z = 11.410237, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [714] = { x = -2019.337, y = -475.7934, z = 11.409697, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+        [715] = { x = -2014.573, y = -479.7837, z = 11.410697, h = 145.0, distance = 1.5, parkingname = 'Great Ocean Highway', parkingzone }, -- Do vodichka
+
     }
 }
 

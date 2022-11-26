@@ -34,48 +34,52 @@ $(document).on('click', '.takeout', function(e) {
 $(document).on("click", '.vecicle-container', function(e) {
    e.preventDefault();
    $.post(`https://king-garages/Click`, JSON.stringify({}));
-   if ($(this).data('currentgarage') ===  $(this).data('garage')) {
-    if (CurrentMenu != null && CurrentMenu != undefined) {
-      CurrentMenu.removeClass("selected");
-      $.post(`https://king-garages/UnselectVehicle`)
-      $(".vehicle-click-container").animate({"right": "-50vh"}, 550, function() {
-        $(".vehicle-click-container").css("display", "none");
-        CurrentVehicleData = {}
-        ChoseActive = false
-        CurrentMenu = null
-      })
+   if ($(this).data('state') === 'in') {
+    if ($(this).data('currentgarage') === $(this).data('garage')) {
+      if (CurrentMenu != null && CurrentMenu != undefined) {
+        CurrentMenu.removeClass("selected");
+        $.post(`https://king-garages/UnselectVehicle`)
+        $(".vehicle-click-container").animate({"right": "-50vh"}, 550, function() {
+          $(".vehicle-click-container").css("display", "none");
+          CurrentVehicleData = {}
+          ChoseActive = false
+          CurrentMenu = null
+        })
+      } else {
+        CurrentVehicleData = {Plate: $(this).data('plate'), Model: $(this).data('model'), State: $(this).data('state'), Fuel: $(this).data('fuel'), Body: $(this).data('body'), Engine: $(this).data('motor'), Price: $(this).data('price')}
+        CurrentMenu = $(this)
+        ChoseActive = true
+        $.post(`https://king-garages/SelectVehicle`, JSON.stringify({Model: $(this).data('model'), Plate: $(this).data('plate'), State: $(this).data('state')}))
+        $(this).addClass("selected");
+        $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css("height", $(this).data('fuel') + "%");
+        $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css("height", $(this).data('motor') / 1000 * 100 + "%");
+        $(".ui-vehiclestatusbarbody").find('.hud-barfill').css("height", $(this).data('body') / 1000 * 100 + "%");
+
+        if ($(this).data('fuel') <= 25) {
+          $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css({"background-color": "rgb(126, 28, 28)"}); 
+        } else {
+          $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css({"background-color": "#1f851c"}); 
+        }
+
+        if (($(this).data('motor') / 1000 * 100) <= 25) {
+          $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css({"background-color": "rgb(126, 28, 28)"}); 
+        } else {
+          $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css({"background-color": "#1f851c"}); 
+        }
+
+        if (($(this).data('body') / 1000 * 100) <= 25) {
+          $(".ui-vehiclestatusbarbody").find('.hud-barfill').css({"background-color": "rgb(126, 28, 28)"}); 
+        } else {
+          $(".ui-vehiclestatusbarbody").find('.hud-barfill').css({"background-color": "#1f851c"}); 
+        }
+        $(".vehicle-click-container").css("display", "block");
+        $(".vehicle-click-container").animate({"right": "0vh"}, 250)
+      }
     } else {
-      CurrentVehicleData = {Plate: $(this).data('plate'), Model: $(this).data('model'), State: $(this).data('state'), Fuel: $(this).data('fuel'), Body: $(this).data('body'), Engine: $(this).data('motor'), Price: $(this).data('price')}
-      CurrentMenu = $(this)
-      ChoseActive = true
-      $.post(`https://king-garages/SelectVehicle`, JSON.stringify({Model: $(this).data('model'), Plate: $(this).data('plate'), State: $(this).data('state')}))
-      $(this).addClass("selected");
-      $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css("height", $(this).data('fuel') + "%");
-      $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css("height", $(this).data('motor') / 1000 * 100 + "%");
-      $(".ui-vehiclestatusbarbody").find('.hud-barfill').css("height", $(this).data('body') / 1000 * 100 + "%");
-
-      if ($(this).data('fuel') <= 25) {
-        $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css({"background-color": "rgb(126, 28, 28)"}); 
-      } else {
-        $(".ui-vehiclestatusbarfuel").find('.hud-barfill').css({"background-color": "#1f851c"}); 
-      }
-
-      if (($(this).data('motor') / 1000 * 100) <= 25) {
-        $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css({"background-color": "rgb(126, 28, 28)"}); 
-      } else {
-        $(".ui-vehiclestatusbarmotor").find('.hud-barfill').css({"background-color": "#1f851c"}); 
-      }
-
-      if (($(this).data('body') / 1000 * 100) <= 25) {
-        $(".ui-vehiclestatusbarbody").find('.hud-barfill').css({"background-color": "rgb(126, 28, 28)"}); 
-      } else {
-        $(".ui-vehiclestatusbarbody").find('.hud-barfill').css({"background-color": "#1f851c"}); 
-      }
-      $(".vehicle-click-container").css("display", "block");
-      $(".vehicle-click-container").animate({"right": "0vh"}, 250)
+      $.post(`https://king-garages/VehicleNotInGarage`, JSON.stringify({State: $(this).data('state'), Garage: $(this).data('garage'), Plate: $(this).data('plate')}))
     }
   } else {
-    $.post(`https://king-garages/VehicleNotInGarage`, JSON.stringify({State: $(this).data('state'), Garage: $(this).data('garage'), Plate: $(this).data('plate')}))
+    $.post(`https://king-garages/VehicleNotInGarage`, JSON.stringify({Pri4ina: 'vehicleout', State: $(this).data('state'), Garage: $(this).data('garage'), Plate: $(this).data('plate')}))
   }
 });
 
